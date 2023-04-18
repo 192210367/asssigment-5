@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int id;
+    char name[50];
+    double score;
+} Student;
+
+int main(void) {
+    FILE *input_file;
+    char input_filename[] = "data.bin";
+    Student student;
+
+    input_file = fopen(input_filename, "rb");
+    if (input_file == NULL) {
+        printf("Error opening input file.\n");
+        exit(1);
+    }
+
+    while (fread(&student, sizeof(Student), 1, input_file) == 1) {
+        printf("ID: %d\n", student.id);
+        printf("Name: %s\n", student.name);
+        printf("Score: %f\n\n", student.score);
+    }
+
+    fclose(input_file);
+
+    return 0;
+}
